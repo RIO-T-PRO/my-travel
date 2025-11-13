@@ -1,11 +1,10 @@
 import Link from "next/link";
-import React from "react";
 
 const NavBar = () => {
   return (
-    <nav className="hidden lg:flex justify-between items-center px-8 py-4 bg-white shadow-sm">
+    <nav className="hidden lg:flex justify-between items-center px-10 py-4 bg-white/80 shadow-sm sticky top-0 z-50 w-full backdrop-blur-lg transition-all duration-300 ">
       {/* Logo */}
-      <h1 className="text-3xl font-semibold text-gray-900">
+      <h1 className="text-3xl md:text-4xl font-semibold text-gray-900">
         go<span className="text-blue-600">explore</span>
       </h1>
 
@@ -15,16 +14,16 @@ const NavBar = () => {
           <Link href="/">Discover</Link>
         </li>
         <li className="hover:text-blue-600 transition-colors">
-          <Link href="/">Trips</Link>
+          <Link href="#">Trips</Link>
         </li>
         <li className="hover:text-blue-600 transition-colors">
-          <Link href="/">Review</Link>
+          <Link href="3">Review</Link>
         </li>
         <li className="hover:text-blue-600 transition-colors">
-          <Link href="/">Resources</Link>
+          <Link href="3">Resources</Link>
         </li>
         <li className="hover:text-blue-600 transition-colors">
-          <Link href="/">About</Link>
+          <Link href="#">About</Link>
         </li>
       </ul>
 
