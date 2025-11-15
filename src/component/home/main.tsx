@@ -1,5 +1,6 @@
-import CardFilter from "./card-filter";
-import CardTravel from "./card-travel";
+import CardFilter from "../card/card-filter";
+import CardTravel from "../card/card-travel";
+import { TravelProduct, travelProducts } from "@/data/villa";
 
 const Main = () => {
   return (
@@ -29,9 +30,9 @@ const Main = () => {
 
         {/* Cards Column */}
         <div className="flex-1 flex flex-col gap-6">
-          <CardTravel />
-          <CardTravel />
-          <CardTravel />
+          {travelProducts.map((villa, index) => (
+            <CardTravel key={index} product={villa} />
+          ))}
         </div>
       </div>
 

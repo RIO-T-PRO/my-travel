@@ -1,18 +1,17 @@
 import Link from "next/link";
-import React from "react";
 
 const CardFilter = () => {
   return (
-    <div className="rounded-2xl border border-gray-400 bg-white shadow-sm p-5">
+    <div className="rounded-2xl border border-gray-400 bg-white shadow-sm ">
       {/* Filter by header */}
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 p-5">
         <span className="text-lg font-semibold text-gray-800">Filter by:</span>
       </div>
 
       {/* Divider after Filter by */}
-      <div className="w-full border-b border-gray-300 my-4"></div>
+      <div className="w-full border-b border-gray-300 my-3"></div>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 p-5">
         {/* Category Section */}
         <div>
           <span className="text-base font-medium text-gray-700">Category</span>
