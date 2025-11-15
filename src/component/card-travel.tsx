@@ -77,7 +77,7 @@ const CardTravel = () => {
           </div>
 
           {/* Button */}
-          <button className="bg-blue-500 text-white px-5 py-2 rounded-lg flex items-center gap-2 mt-3 md:mt-0">
+          <button className="bg-blue-500 text-white px-5 py-2 rounded-lg cursor-pointer flex items-center gap-2 mt-3 md:mt-0">
             See Availability
             <FaArrowRight />
           </button>

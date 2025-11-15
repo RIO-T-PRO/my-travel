@@ -28,7 +28,7 @@ const NavBar = () => {
       </ul>
 
       {/* CTA Button */}
-      <button className="px-5 py-2 bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 transition">
+      <button className="px-5 py-2 bg-blue-600 text-white font-medium rounded-full cursor-pointer hover:bg-blue-700 transition">
         Sign in
       </button>
     </nav>

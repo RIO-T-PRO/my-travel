@@ -115,7 +115,7 @@ const HeroSection = () => {
             </div>
 
             {/* Sign In Button */}
-            <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg transition w-full md:w-auto">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold cursor-pointer px-5 py-2 rounded-lg transition w-full md:w-auto">
               Sign In
             </button>
           </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const CardFilter = () => {
@@ -197,7 +198,11 @@ const CardFilter = () => {
         </div>
 
         {/* Show more link */}
-        <span className="text-blue-600 font-medium text-sm">Show more</span>
+        <Link href="#">
+          <span className="text-blue-600 font-medium text-sm cursor-pointer">
+            Show more
+          </span>
+        </Link>
       </div>
     </div>
   );
