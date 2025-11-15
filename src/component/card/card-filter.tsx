@@ -1,6 +1,41 @@
+"use client";
+
+import { useAppContext } from "@/context/product-context";
+import { travelProducts } from "@/data/villa";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const CardFilter = () => {
+  const categories = [...new Set(travelProducts.map((item) => item.category))];
+  const locations = [...new Set(travelProducts.map((item) => item.location))];
+
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const { setProducts } = useAppContext();
+
+  const toggleCategory = (value: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value]
+    );
+  };
+
+  useEffect(() => {
+    applyFilter();
+  }, [selectedCategories]);
+
+  const applyFilter = () => {
+    const filtered = travelProducts.filter((item) => {
+      const categoryMatch =
+        selectedCategories.length === 0 ||
+        selectedCategories.includes(item.category);
+
+      return categoryMatch;
+    });
+
+    setProducts(filtered);
+  };
+
   return (
     <div className="rounded-2xl border border-gray-400 bg-white shadow-sm ">
       {/* Filter by header */}
@@ -16,42 +51,24 @@ const CardFilter = () => {
         <div>
           <span className="text-base font-medium text-gray-700">Category</span>
           <ul className="flex flex-col gap-2 mt-2 text-sm text-gray-700">
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Tours</span>
-              </label>
-              <span className="text-gray-500">197</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Nature & Outdoor</span>
-              </label>
-              <span className="text-gray-500">100</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Entertainment</span>
-              </label>
-              <span className="text-gray-500">27</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Food & Drinks</span>
-              </label>
-              <span className="text-gray-500">200</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Museum, Arts & Culture</span>
-              </label>
-              <span className="text-gray-500">144</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Workshop & Classes</span>
-              </label>
-              <span className="text-gray-500">323</span>
-            </li>
+            {categories.map((category, index) => (
+              <li key={index} className="flex justify-between items-center">
+                <label className="flex items-center gap-1">
+                  <input
+                    checked={selectedCategories.includes(category)}
+                    onChange={() => toggleCategory(category)}
+                    type="checkbox"
+                  />
+                  <span>{category}</span>
+                </label>
+                <span className="text-gray-500">
+                  {
+                    travelProducts.filter((item) => item.category === category)
+                      .length
+                  }
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -59,48 +76,19 @@ const CardFilter = () => {
         <div>
           <span className="text-base font-medium text-gray-700">Location</span>
           <ul className="flex flex-col gap-2 mt-2 text-sm text-gray-700">
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Australia</span>
-              </label>
-              <span className="text-gray-500">197</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>England</span>
-              </label>
-              <span className="text-gray-500">100</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Switzerland</span>
-              </label>
-              <span className="text-gray-500">27</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Spain</span>
-              </label>
-              <span className="text-gray-500">200</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Congo</span>
-              </label>
-              <span className="text-gray-500">144</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Brazil</span>
-              </label>
-              <span className="text-gray-500">323</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>Brazil</span>
-              </label>
-              <span className="text-gray-500">323</span>
-            </li>
+            {locations.map((location, index) => (
+              <li key={index} className="flex justify-between items-center">
+                <label className="flex items-center gap-1">
+                  <input type="checkbox" /> <span>{location}</span>
+                </label>
+                <span className="text-gray-500">
+                  {
+                    travelProducts.filter((item) => item.location === location)
+                      .length
+                  }
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -108,35 +96,25 @@ const CardFilter = () => {
         <div>
           <span className="text-base font-medium text-gray-700">Reviews</span>
           <ul className="flex flex-col gap-2 mt-2 text-sm text-gray-700">
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>4.5 & up</span>
-              </label>
-              <span className="text-gray-500">323</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>4.0 & up</span>
-              </label>
-              <span className="text-gray-500">323</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>3.5 & up</span>
-              </label>
-              <span className="text-gray-500">27</span>
-            </li>
-            <li className="flex justify-between items-center">
-              <label className="flex items-center gap-1">
-                <input type="checkbox" /> <span>4.0 & up</span>
-              </label>
-              <span className="text-gray-500">323</span>
-            </li>
+            {[1, 2, 3, 4, 5].map((review, index) => (
+              <li key={index} className="flex justify-between items-center">
+                <label className="flex items-center gap-1">
+                  <input type="checkbox" /> <span>{review}</span>
+                </label>
+                <span className="text-gray-500">
+                  {
+                    travelProducts.filter(
+                      (item) => Math.floor(item.rating) === review
+                    ).length
+                  }
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Languages Section */}
-        <div>
+        {/* <div>
           <span className="text-base font-medium text-gray-700">Languages</span>
           <ul className="flex flex-col gap-2 mt-2 text-sm text-gray-700">
             <li className="flex justify-between items-center">
@@ -194,7 +172,7 @@ const CardFilter = () => {
               <span className="text-gray-500">323</span>
             </li>
           </ul>
-        </div>
+        </div> */}
 
         {/* Show more link */}
         <Link href="#">

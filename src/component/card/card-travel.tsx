@@ -47,7 +47,7 @@ const CardTravel: React.FC<TravelProductProps> = ({ product }) => {
             <p className="text-gray-600 text-base line-clamp-2">
               {product.description}
             </p>
-            <span className="text-sm font-medium">{product.propertyName}</span>
+            <span className="text-sm font-medium">{product.location}</span>
           </div>
         </div>
 
@@ -83,8 +83,8 @@ const CardTravel: React.FC<TravelProductProps> = ({ product }) => {
           </div>
 
           {/* Button */}
-          <button className="bg-blue-500 text-white px-5 py-2 rounded-lg cursor-pointer flex items-center gap-2 mt-3 md:mt-0">
-            See Availability
+          <button className="bg-blue-500 text-white px-5 py-2 rounded-lg cursor-pointer flex items-center gap-2 mt-3 md:mt-0 whitespace-nowrap">
+            <span> See Availability</span>
             <FaArrowRight />
           </button>
         </div>

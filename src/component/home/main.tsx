@@ -1,8 +1,12 @@
+"use client";
+
+import { useAppContext } from "@/context/product-context";
 import CardFilter from "../card/card-filter";
 import CardTravel from "../card/card-travel";
-import { TravelProduct, travelProducts } from "@/data/villa";
 
 const Main = () => {
+  const { products } = useAppContext();
+
   return (
     <main className="px-6 md:px-10 mb-10 flex flex-col gap-6">
       {/* Header */}
@@ -30,7 +34,7 @@ const Main = () => {
 
         {/* Cards Column */}
         <div className="flex-1 flex flex-col gap-6">
-          {travelProducts.map((villa, index) => (
+          {products.map((villa, index) => (
             <CardTravel key={index} product={villa} />
           ))}
         </div>
