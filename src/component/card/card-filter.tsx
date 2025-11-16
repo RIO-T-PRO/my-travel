@@ -10,6 +10,8 @@ const CardFilter = () => {
   const locations = [...new Set(travelProducts.map((item) => item.location))];
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selecetdLocation, setSelectedLocation] = useState<string[]>([]);
+  const [selecetedReviews, setSelectedReviews] = useState<number[]>([]);
   const { setProducts } = useAppContext();
 
   const toggleCategory = (value: string) => {
@@ -20,9 +22,25 @@ const CardFilter = () => {
     );
   };
 
+  const toggleLocation = (value: string) => {
+    setSelectedLocation((prev) =>
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value]
+    );
+  };
+
+  const toggleReview = (value: number) => {
+    setSelectedReviews((prev) =>
+      prev.includes(value)
+        ? prev.filter((item) => item !== value)
+        : [...prev, value]
+    );
+  };
+
   useEffect(() => {
     applyFilter();
-  }, [selectedCategories]);
+  }, [selectedCategories, selecetdLocation, selecetedReviews]);
 
   const applyFilter = () => {
     const filtered = travelProducts.filter((item) => {
@@ -30,7 +48,15 @@ const CardFilter = () => {
         selectedCategories.length === 0 ||
         selectedCategories.includes(item.category);
 
-      return categoryMatch;
+      const locationMatch =
+        selecetdLocation.length === 0 ||
+        selecetdLocation.includes(item.location);
+
+      const reviewMatch =
+        selecetedReviews.length === 0 ||
+        selecetedReviews.includes(item.reviews);
+
+      return categoryMatch && locationMatch && reviewMatch;
     });
 
     setProducts(filtered);
@@ -79,7 +105,12 @@ const CardFilter = () => {
             {locations.map((location, index) => (
               <li key={index} className="flex justify-between items-center">
                 <label className="flex items-center gap-1">
-                  <input type="checkbox" /> <span>{location}</span>
+                  <input
+                    checked={selecetdLocation.includes(location)}
+                    onChange={() => toggleLocation(location)}
+                    type="checkbox"
+                  />{" "}
+                  <span>{location}</span>
                 </label>
                 <span className="text-gray-500">
                   {
@@ -99,7 +130,12 @@ const CardFilter = () => {
             {[1, 2, 3, 4, 5].map((review, index) => (
               <li key={index} className="flex justify-between items-center">
                 <label className="flex items-center gap-1">
-                  <input type="checkbox" /> <span>{review}</span>
+                  <input
+                    checked={selecetedReviews.includes(review)}
+                    onChange={() => toggleReview(review)}
+                    type="checkbox"
+                  />
+                  <span>{review}</span>
                 </label>
                 <span className="text-gray-500">
                   {
