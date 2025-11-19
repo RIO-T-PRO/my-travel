@@ -3,9 +3,49 @@
 import { useAppContext } from "@/context/product-context";
 import CardFilter from "../card/card-filter";
 import CardTravel from "../card/card-travel";
+import { ChangeEvent, useState } from "react";
+import { travelProducts } from "@/data/villa";
 
 const Main = () => {
   const { products } = useAppContext();
+  const [search, setSearch] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>("latest");
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const handleSort = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSortBy(e.target.value);
+  };
+
+  let filteredProducts = products.filter((item) => {
+    const match = search.toLowerCase();
+
+    return (
+      item.title.toLowerCase().includes(match) ||
+      item.category.toLowerCase().includes(match) ||
+      item.location.toLowerCase().includes(match)
+    );
+  });
+
+  if (sortBy === "price-low") {
+    filteredProducts = [...filteredProducts].sort(
+      (a, b) => a.currentPrice - b.currentPrice
+    );
+  }
+
+  if (sortBy === "price-high") {
+    filteredProducts = [...filteredProducts].sort(
+      (a, b) => b.currentPrice - a.currentPrice
+    );
+  }
+
+  if (sortBy === "rating") {
+    filteredProducts = [...filteredProducts].sort(
+      (a, b) => b.rating - a.rating
+    );
+  }
 
   return (
     <main className="px-6 md:px-10 mb-10 flex flex-col gap-6">
@@ -14,13 +54,25 @@ const Main = () => {
         <h3 className="text-2xl font-semibold text-gray-800">
           All Available Resorts in West Indies
         </h3>
+
+        <input
+          value={search}
+          onChange={handleSearch}
+          type="text"
+          placeholder="Search"
+          className="rounded-2xl w-2/5 px-5 py-1 border border-zinc-300"
+        />
         <div className="flex items-center gap-2 text-gray-600 text-sm border border-gray-300 rounded-md px-3 py-1 bg-white">
           <span>Sort by:</span>
-          <select className="bg-transparent focus:outline-none">
-            <option>Latest</option>
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-            <option>Rating</option>
+          <select
+            onChange={handleSort}
+            value={sortBy}
+            className="bg-transparent focus:outline-none"
+          >
+            <option value="latest">Latest</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Rating</option>
           </select>
         </div>
       </div>
@@ -34,8 +86,8 @@ const Main = () => {
 
         {/* Cards Column */}
         <div className="flex-1 flex flex-col gap-6">
-          {products.map((villa, index) => (
-            <CardTravel key={index} product={villa} />
+          {filteredProducts.map((item, index) => (
+            <CardTravel key={index} product={item} />
           ))}
         </div>
       </div>

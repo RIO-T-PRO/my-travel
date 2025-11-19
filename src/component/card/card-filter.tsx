@@ -11,7 +11,7 @@ const CardFilter = () => {
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selecetdLocation, setSelectedLocation] = useState<string[]>([]);
-  const [selecetedReviews, setSelectedReviews] = useState<number[]>([]);
+  const [selectedRating, setSelectedRating] = useState<number[]>([]);
   const { setProducts } = useAppContext();
 
   const toggleCategory = (value: string) => {
@@ -31,7 +31,7 @@ const CardFilter = () => {
   };
 
   const toggleReview = (value: number) => {
-    setSelectedReviews((prev) =>
+    setSelectedRating((prev) =>
       prev.includes(value)
         ? prev.filter((item) => item !== value)
         : [...prev, value]
@@ -40,7 +40,7 @@ const CardFilter = () => {
 
   useEffect(() => {
     applyFilter();
-  }, [selectedCategories, selecetdLocation, selecetedReviews]);
+  }, [selectedCategories, selecetdLocation, selectedRating]);
 
   const applyFilter = () => {
     const filtered = travelProducts.filter((item) => {
@@ -53,8 +53,8 @@ const CardFilter = () => {
         selecetdLocation.includes(item.location);
 
       const reviewMatch =
-        selecetedReviews.length === 0 ||
-        selecetedReviews.includes(item.reviews);
+        selectedRating.length === 0 ||
+        selectedRating.includes(Math.floor(item.rating));
 
       return categoryMatch && locationMatch && reviewMatch;
     });
@@ -131,7 +131,7 @@ const CardFilter = () => {
               <li key={index} className="flex justify-between items-center">
                 <label className="flex items-center gap-1">
                   <input
-                    checked={selecetedReviews.includes(review)}
+                    checked={selectedRating.includes(review)}
                     onChange={() => toggleReview(review)}
                     type="checkbox"
                   />
