@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import img from "next/image";
 import { resorts } from "@/lib/data";
 
 export default function ResortsPage() {
@@ -13,7 +12,7 @@ export default function ResortsPage() {
   const toggleCategory = (category: string) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
-        ? prev.filter((c) => c !== category)
+        ? prev.filter((cat) => cat !== category)
         : [...prev, category]
     );
   };
