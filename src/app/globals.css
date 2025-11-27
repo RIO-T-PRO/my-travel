@@ -11,13 +11,7 @@
 
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  --radius-default: 0.75rem;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  --radius-default: 24px;
 }
 
 body {

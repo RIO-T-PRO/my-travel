@@ -1,163 +1,115 @@
 import Link from "next/link";
-
-import {
-  FaApple,
-  FaGooglePlay,
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-} from "react-icons/fa";
+import { FaApple, FaGooglePlay } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-900 text-slate-400 mt-16">
-      <div className="container mx-auto px-4 py-12">
+    <footer className="bg-slate-900 text-slate-400 mt-16 px-12 py-8">
+      <div className="container mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
-          <div className="col-span-2 md:col-span-4 lg:col-span-2">
-            <h3 className="text-2xl font-bold text-white mb-2">
+          <div className="col-span-2 md:col-span-4 lg:col-span-2 flex flex-col gap-4">
+            <h3 className="text-2xl font-bold text-white">
               go<span className="text-primary">explore</span>
             </h3>
-            <p className="text-sm mb-4">Your next adventure starts here.</p>
-            <div className="flex items-center gap-4">
-              <Link
-                href="#"
-                className="bg-slate-800 text-white p-2 rounded-md hover:bg-slate-700"
-              >
-                <span className="text-xs">App Store</span>
+            <p className="text-sm">Your next adventure starts here.</p>
+
+            <div className="flex flex-row gap-4">
+              <Link href="#" className="flex text-white items-center gap-2">
+                <FaApple className="w-4 h-4" />
+                <span className="text-xs font-semibold">App Store</span>
               </Link>
-              <Link
-                href="#"
-                className="bg-slate-800 text-white p-2 rounded-md hover:bg-slate-700"
-              >
-                <span className="text-xs">Google Play</span>
+              <Link href="#" className="flex text-white  items-center gap-2">
+                <FaGooglePlay className="w-4 h-4" />
+                <span className="text-xs font-semibold">Google Play</span>
               </Link>
             </div>
           </div>
 
-          <div>
-            <h4 className="font-semibold text-white mb-4">
-              Available Countries
-            </h4>
-            <ul className="space-y-2 text-sm">
+          {/* Available Countries */}
+          <div className="flex flex-col gap-2">
+            <h4 className="font-semibold text-white">Available Countries</h4>
+            <ul className="flex flex-col gap-2 text-sm">
+              {["Australia", "Canada", "Denmark", "Finland", "England"].map(
+                (country) => (
+                  <li key={country}>
+                    <Link href="#" className="inline-block hover:text-primary">
+                      {country}
+                    </Link>
+                  </li>
+                )
+              )}
               <li>
-                <Link href="#" className="hover:text-primary">
-                  Australia
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Canada
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Denmark
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Finland
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  England
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-primary hover:underline">
+                <Link
+                  href="#"
+                  className="inline-block text-primary hover:underline"
+                >
                   More Countries
                 </Link>
               </li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="font-semibold text-white mb-4">Company</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/about" className="hover:text-primary">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-primary">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link href="/resources" className="hover:text-primary">
-                  Resources
-                </Link>
-              </li>
+          {/* Company */}
+          <div className="flex flex-col gap-2">
+            <h4 className="font-semibold text-white">Company</h4>
+            <ul className="flex flex-col gap-2 text-sm">
+              {["About", "Contact", "Careers", "Resources"].map((item) => (
+                <li key={item}>
+                  <Link
+                    href={`/${item.toLowerCase()}`}
+                    className="inline-block hover:text-primary"
+                  >
+                    {item}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div>
-            <h4 className="font-semibold text-white mb-4">Policies</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Privacy
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Terms & Conditions
-                </Link>
-              </li>
+          {/* Policies */}
+          <div className="flex flex-col gap-2">
+            <h4 className="font-semibold text-white">Policies</h4>
+            <ul className="flex flex-col gap-2 text-sm">
+              {["Privacy", "Terms of Service", "Terms & Conditions"].map(
+                (item) => (
+                  <li key={item}>
+                    <Link href="#" className="inline-block hover:text-primary">
+                      {item}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 
-          <div>
-            <h4 className="font-semibold text-white mb-4">Help</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Support
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-primary">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Cancel a ticket
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Buy Ticket
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="hover:text-primary">
-                  Book a trip
-                </Link>
-              </li>
+          {/* Help */}
+          <div className="flex flex-col gap-2">
+            <h4 className="font-semibold text-white">Help</h4>
+            <ul className="flex flex-col gap-2 text-sm">
+              {[
+                "Support",
+                "Contact",
+                "Cancel a ticket",
+                "Buy Ticket",
+                "Book a trip",
+              ].map((item) => (
+                <li key={item}>
+                  <Link href="#" className="inline-block hover:text-primary">
+                    {item}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-slate-800 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-sm">
+        {/* Bottom Row */}
+        <div className="border-t border-slate-800 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 text-sm">
           <p>© 2024 all rights reserved by goexplore inc.</p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link href="#" className="hover:text-primary">
+          <div className="flex flex-row gap-4">
+            <Link href="#" className="inline-block hover:text-primary">
               Terms of Service
             </Link>
-            <Link href="#" className="hover:text-primary">
+            <Link href="#" className="inline-block hover:text-primary">
               Privacy Policy
             </Link>
           </div>

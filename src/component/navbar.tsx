@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 const NavBar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
     <header className="bg-background-light dark:bg-card-dark/80 backdrop-blur-sm sticky top-0 z-40 border-b border-slate-200 dark:border-slate-800">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto p-4">
         <div className="flex justify-between items-center">
           <Link
             href="/"
