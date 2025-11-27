@@ -7,7 +7,7 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-bacground-light dark:bg-card-dark/80 backdrop-blur-sm sticky top-0 z-40 boder-b border-slate-200 dark:border-slate-800">
+    <header className="bg-background-light dark:bg-card-dark/80 backdrop-blur-sm sticky top-0 z-40 border-b border-slate-200 dark:border-slate-800">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <Link
@@ -60,9 +60,11 @@ const NavBar = () => {
             <button className="hidden md:block bg-primary text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-primary-dark transition-colors">
               Sign In
             </button>
-
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              <span className="material-icpons-outlined">menu</span>
+            <button
+              className="md:hidden text-slate-900 dark:text-white"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <span className="material-icons-outlined">menu</span>
             </button>
           </div>
         </div>

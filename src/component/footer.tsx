@@ -10,153 +10,157 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0a0a0a] text-gray-300 px-4 sm:px-6 md:px-8 lg:px-8 py-8 md:py-10 lg:py-6">
-      {/* Top Section */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-10 mb-12">
-        {/* Brand */}
-        <div className="text-center md:text-left">
-          <h1 className="text-3xl md:text-4xl font-semibold text-white">
-            go<span className="text-blue-500">explore</span>
-          </h1>
-          <p className="mt-3 text-gray-400 md:w-72">
-            Discover the world with ease. Plan, book, and explore your next
-            destination today.
-          </p>
-        </div>
+    <footer className="bg-slate-900 text-slate-400 mt-16">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
+          <div className="col-span-2 md:col-span-4 lg:col-span-2">
+            <h3 className="text-2xl font-bold text-white mb-2">
+              go<span className="text-primary">explore</span>
+            </h3>
+            <p className="text-sm mb-4">Your next adventure starts here.</p>
+            <div className="flex items-center gap-4">
+              <Link
+                href="#"
+                className="bg-slate-800 text-white p-2 rounded-md hover:bg-slate-700"
+              >
+                <span className="text-xs">App Store</span>
+              </Link>
+              <Link
+                href="#"
+                className="bg-slate-800 text-white p-2 rounded-md hover:bg-slate-700"
+              >
+                <span className="text-xs">Google Play</span>
+              </Link>
+            </div>
+          </div>
 
-        {/* Download Apps */}
-        <div className="text-center md:text-right">
-          <p className="text-white font-medium mb-4">Download the App</p>
-          <div className="flex flex-col sm:flex-row justify-center md:justify-end gap-4">
-            <button className="flex items-center gap-3 border border-gray-600 rounded-lg px-4 py-2 hover:border-blue-500 transition">
-              <FaApple className="text-2xl text-white" />
-              <div className="text-left">
-                <p className="text-xs">Download on the</p>
-                <h3 className="text-sm font-semibold text-white">App Store</h3>
-              </div>
-            </button>
+          <div>
+            <h4 className="font-semibold text-white mb-4">
+              Available Countries
+            </h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Australia
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Canada
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Denmark
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Finland
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  England
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="text-primary hover:underline">
+                  More Countries
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-            <button className="flex items-center gap-3 border border-gray-600 rounded-lg px-4 py-2 hover:border-blue-500 transition">
-              <FaGooglePlay className="text-2xl text-white" />
-              <div className="text-left">
-                <p className="text-xs">Get it on</p>
-                <h3 className="text-sm font-semibold text-white">
-                  Google Play
-                </h3>
-              </div>
-            </button>
+          <div>
+            <h4 className="font-semibold text-white mb-4">Company</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/about" className="hover:text-primary">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-primary">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link href="/resources" className="hover:text-primary">
+                  Resources
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-white mb-4">Policies</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Privacy
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Terms & Conditions
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-white mb-4">Help</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Support
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-primary">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Cancel a ticket
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Buy Ticket
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-primary">
+                  Book a trip
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
 
-      {/* Links Section */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-16">
-        {/* Countries */}
-        <div>
-          <h3 className="text-white font-semibold mb-4">Available Countries</h3>
-          <ul className="flex flex-col gap-2">
-            <li>Australia</li>
-            <li>Canada</li>
-            <li>United States</li>
-            <li>Germany</li>
-            <li>Japan</li>
-            <li>UAE</li>
-            <li className="text-blue-500 hover:underline cursor-pointer">
-              More Countries →
-            </li>
-          </ul>
-        </div>
-
-        {/* Company */}
-        <div>
-          <h3 className="text-white font-semibold mb-4">Company</h3>
-          <ul className="flex flex-col gap-2">
-            <li>
-              <Link href="#">About</Link>
-            </li>
-            <li>
-              <Link href="#">Contact</Link>
-            </li>
-            <li>
-              <Link href="#">Trips</Link>
-            </li>
-            <li>
-              <Link href="#">Reviews</Link>
-            </li>
-            <li>
-              <Link href="#">Resources</Link>
-            </li>
-            <li>
-              <Link href="#">features</Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Policies */}
-        <div>
-          <h3 className="text-white font-semibold mb-4">Policies</h3>
-          <ul className="flex flex-col gap-2">
-            <li>
-              <Link href="#">Privacy</Link>
-            </li>
-            <li>
-              <Link href="#">Cookies</Link>
-            </li>
-            <li>
-              <Link href="#">Terms of Use</Link>
-            </li>
-            <li>
-              <Link href="#">Terms & Conditions</Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Help */}
-        <div>
-          <h3 className="text-white font-semibold mb-4">Help</h3>
-          <ul className="flex flex-col gap-2">
-            <li>
-              <Link href="#">Support</Link>
-            </li>
-            <li>
-              <Link href="#">Contact</Link>
-            </li>
-            <li>
-              <Link href="#">Cancel a Ticket</Link>
-            </li>
-            <li>
-              <Link href="#">Buy Ticket</Link>
-            </li>
-            <li>
-              <Link href="#">Book a Trip</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Divider */}
-      <div className="border-t border-gray-700 my-10"></div>
-
-      {/* Bottom Section */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
-        {/* Social Icons */}
-        <div className="flex items-center gap-6 text-gray-400">
-          <FaFacebookF className="hover:text-blue-500 cursor-pointer transition" />
-          <FaTwitter className="hover:text-blue-400 cursor-pointer transition" />
-          <FaLinkedinIn className="hover:text-blue-600 cursor-pointer transition" />
-        </div>
-
-        {/* Legal Links */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center">
-          <Link href="#" className="hover:text-white transition">
-            Terms of Service
-          </Link>
-          <Link href="#" className="hover:text-white transition">
-            Privacy Policy
-          </Link>
-          <p className="text-gray-500">
-            © 2025 Riot-Pro-Alex. All rights reserved.
-          </p>
+        <div className="border-t border-slate-800 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-sm">
+          <p>© 2024 all rights reserved by goexplore inc.</p>
+          <div className="flex space-x-4 mt-4 md:mt-0">
+            <Link href="#" className="hover:text-primary">
+              Terms of Service
+            </Link>
+            <Link href="#" className="hover:text-primary">
+              Privacy Policy
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
