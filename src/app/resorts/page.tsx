@@ -4,17 +4,55 @@ import { useState } from "react";
 import { resorts } from "@/lib/data";
 
 export default function ResortsPage() {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    "Nature & Outdoor",
-  ]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const locations = [...new Set(resorts.map((resort) => resort.location))];
+  const categories = [...new Set(resorts.map((resort) => resort.category))];
+
+  const toggleLocation = (location: string) => {
+    setSelectedLocations((prev) =>
+      prev.includes(location)
+        ? prev.filter((l) => l !== location)
+        : [...prev, location]
+    );
+  };
 
   const toggleCategory = (category: string) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
-        ? prev.filter((cat) => cat !== category)
+        ? prev.filter((c) => c !== category)
         : [...prev, category]
     );
+  };
+
+  const resortPerTabs = 4;
+  const numberOfTabs = Math.ceil(resorts.length / resortPerTabs);
+  const tabs = Array.from({ length: numberOfTabs }, (_, i) => i + 1);
+
+  const filteredResort = resorts.filter((resort) => {
+    const matchLocation =
+      selectedLocations.length === 0 ||
+      selectedLocations.includes(resort.location);
+
+    const matchCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(resort.category);
+
+    return matchLocation && matchCategory;
+  });
+
+  const startIndex = (currentPage - 1) * resortPerTabs;
+  const endIndex = startIndex + resortPerTabs;
+  const displayedFilteredResorts = filteredResort.slice(startIndex, endIndex);
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, numberOfTabs));
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
 
   return (
@@ -100,30 +138,27 @@ export default function ResortsPage() {
                     Category
                   </h4>
                   <div className="space-y-2">
-                    {[
-                      { name: "Nature & Outdoor", count: 207 },
-                      { name: "Entertainment", count: 37 },
-                      { name: "Food & Drinks", count: 172 },
-                      { name: "Museum, Arts, & Culture", count: 144 },
-                      { name: "Workshop & Classes", count: 333 },
-                    ].map((category) => (
+                    {categories.map((category) => (
                       <label
-                        key={category.name}
+                        key={category}
                         className="flex items-center justify-between cursor-pointer"
                       >
                         <div className="flex items-center">
                           <input
                             type="checkbox"
-                            checked={selectedCategories.includes(category.name)}
-                            onChange={() => toggleCategory(category.name)}
+                            checked={selectedCategories.includes(category)}
+                            onChange={() => toggleCategory(category)}
                             className="h-4 w-4 rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary/50"
                           />
                           <span className="ml-2 text-slate-600 dark:text-slate-300">
-                            {category.name}
+                            {category}
                           </span>
                         </div>
                         <span className="text-sm text-slate-400">
-                          {category.count}
+                          {
+                            resorts.filter((item) => item.category === category)
+                              .length
+                          }
                         </span>
                       </label>
                     ))}
@@ -139,28 +174,27 @@ export default function ResortsPage() {
                     Location
                   </h4>
                   <div className="space-y-2">
-                    {[
-                      { name: "Australia", count: 333 },
-                      { name: "England", count: 192 },
-                      { name: "Switzerland", count: 622 },
-                      { name: "Spain", count: 18 },
-                      { name: "Brazil", count: 33 },
-                    ].map((location) => (
+                    {locations.map((location) => (
                       <label
-                        key={location.name}
+                        key={location}
                         className="flex items-center justify-between cursor-pointer"
                       >
                         <div className="flex items-center">
                           <input
+                            checked={selectedLocations.includes(location)}
+                            onChange={() => toggleLocation(location)}
                             type="checkbox"
                             className="h-4 w-4 rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary/50"
                           />
                           <span className="ml-2 text-slate-600 dark:text-slate-300">
-                            {location.name}
+                            {location}
                           </span>
                         </div>
                         <span className="text-sm text-slate-400">
-                          {location.count}
+                          {
+                            resorts.filter((item) => item.location === location)
+                              .length
+                          }
                         </span>
                       </label>
                     ))}
@@ -193,7 +227,7 @@ export default function ResortsPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {resorts.map((resort) => (
+              {displayedFilteredResorts.map((resort) => (
                 <div
                   key={resort.id}
                   className="bg-white dark:bg-card-dark rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-shadow"
@@ -303,26 +337,33 @@ export default function ResortsPage() {
 
             {/* Pagination */}
             <div className="flex justify-center items-center space-x-2 pt-8">
-              <button className="flex items-center px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">
+              <button
+                onClick={handlePrevious}
+                className="flex items-center px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
                 <span className="material-icons-outlined text-lg mr-1">
                   arrow_back
                 </span>
                 Previous
               </button>
-              <button className="px-3 py-1 rounded-md bg-primary text-white">
-                1
-              </button>
-              <button className="px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">
-                2
-              </button>
-              <button className="px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">
-                3
-              </button>
+              {tabs.map((tabs) => (
+                <button
+                  key={tabs}
+                  onClick={() => setCurrentPage(tabs)}
+                  className={`px-3 py-1 rounded-md  ${
+                    currentPage === tabs
+                      ? "bg-primary text-white"
+                      : " text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  }`}
+                >
+                  {tabs}
+                </button>
+              ))}
               <span className="text-slate-500 dark:text-slate-400">...</span>
-              <button className="px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">
-                10
-              </button>
-              <button className="flex items-center px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">
+              <button
+                onClick={handleNextPage}
+                className="flex items-center px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
                 Next
                 <span className="material-icons-outlined text-lg ml-1">
                   arrow_forward

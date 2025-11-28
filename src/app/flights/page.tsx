@@ -62,7 +62,7 @@ export default function FlightsPage() {
     }
   };
 
-  const flightsPerTab = 5;
+  const flightsPerTab = 4;
   const numberOfTabs = Math.ceil(flights.length / flightsPerTab);
   const tabs = Array.from({ length: numberOfTabs }, (_, i) => i + 1);
 
@@ -81,11 +81,11 @@ export default function FlightsPage() {
   const displayedFlights = filteredFlights.slice(startIndex, endIndex);
 
   const handleNextPage = () => {
-    setCurrentPage((prev) => prev + 1);
+    setCurrentPage((prev) => Math.min(prev + 1, numberOfTabs));
   };
 
   const handlePrevious = () => {
-    setCurrentPage((prev) => prev - 1);
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
 
   return (
@@ -426,6 +426,7 @@ export default function FlightsPage() {
                   {tabs}
                 </button>
               ))}
+              <span className="text-slate-500 dark:text-slate-400">...</span>
               <button
                 onClick={handleNextPage}
                 className="flex items-center px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700"

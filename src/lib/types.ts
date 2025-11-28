@@ -17,6 +17,7 @@ export interface Flight {
 export interface Resort {
   id: string;
   name: string;
+  category: string;
   location: string;
   rating: number;
   reviewCount: number;
