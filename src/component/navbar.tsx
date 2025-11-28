@@ -57,9 +57,11 @@ const NavBar = () => {
           </nav>
 
           <div className="flex items-center space-x-4">
-            <button className="hidden md:block bg-primary text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-primary-dark transition-colors">
-              Sign In
-            </button>
+            <Link href="/signin">
+              <button className="hidden md:block bg-primary text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-primary-dark transition-colors">
+                Sign In
+              </button>
+            </Link>
             <button
               className="md:hidden text-slate-900 dark:text-white"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
