@@ -4,11 +4,15 @@ import { flights } from "@/lib/data";
 import { useState } from "react";
 
 export default function FlightsPage() {
-  const [selectedStops, setSelectedStops] = useState<number[]>([1]);
-  const [selectedAirlines, setSelectedAirlines] = useState<string[]>([
-    "American Airlines",
-  ]);
-  const [priceRange, setPriceRange] = useState(750);
+  const [selectedStops, setSelectedStops] = useState<number[]>([]);
+  const [selectedAirlines, setSelectedAirlines] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const airlines = [...new Set(flights.map((flight) => flight.airline))];
+  const prices = [...new Set(flights.map((flight) => flight.price))];
+  const maxPrice = Math.max(...prices);
+
+  const [priceRange, setPriceRange] = useState(maxPrice);
 
   const toggleStop = (stops: number) => {
     setSelectedStops((prev) =>
@@ -26,12 +30,63 @@ export default function FlightsPage() {
     );
   };
 
+  const getDurationMinutes = (duration: string) => {
+    const match = duration.match(/(\d+)h\s*(\d+)?m?/); // match "7h 30m"
+    if (!match) return 0;
+    const hours = parseInt(match[1], 10);
+    const minutes = match[2] ? parseInt(match[2], 10) : 0;
+    return hours * 60 + minutes;
+  };
+
+  const getDepartureMinutes = (time: string) => {
+    const [hourMin, modifier] = time.split(" "); // "10:45 AM" => ["10:45", "AM"]
+    const [hours, minutes] = hourMin.split(":").map(Number);
+    let hrs = hours % 12;
+    if (modifier.toUpperCase() === "PM") hrs += 12;
+    return hrs * 60 + minutes;
+  };
+
+  const handleSort = (value: string) => {
+    if (value === "bestPrice") {
+      flights.sort((a, b) => a.price - b.price);
+    } else if (value === "fatest") {
+      flights.sort(
+        (a, b) =>
+          getDurationMinutes(a.duration) - getDurationMinutes(b.duration)
+      );
+    } else if (value === "departureTime") {
+      flights.sort(
+        (a, b) =>
+          getDepartureMinutes(a.departure) - getDepartureMinutes(a.departure)
+      );
+    }
+  };
+
+  const flightsPerTab = 5;
+  const numberOfTabs = Math.ceil(flights.length / flightsPerTab);
+  const tabs = Array.from({ length: numberOfTabs }, (_, i) => i + 1);
+
   const filteredFlights = flights.filter((flight) => {
-    const matchesStops = selectedStops.includes(flight.stops);
-    const matchesAirline = selectedAirlines.includes(flight.airline);
+    const matchesStops =
+      selectedStops.length === 0 || selectedStops.includes(flight.stops);
+    const matchesAirline =
+      selectedAirlines.length === 0 ||
+      selectedAirlines.includes(flight.airline);
     const matchesPrice = flight.price <= priceRange;
     return matchesStops && matchesAirline && matchesPrice;
   });
+
+  const startIndex = (currentPage - 1) * flightsPerTab;
+  const endIndex = startIndex + flightsPerTab;
+  const displayedFlights = filteredFlights.slice(startIndex, endIndex);
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage((prev) => prev - 1);
+  };
 
   return (
     <main>
@@ -141,7 +196,7 @@ export default function FlightsPage() {
                   onClick={() => {
                     setSelectedStops([]);
                     setSelectedAirlines([]);
-                    setPriceRange(1500);
+                    setPriceRange(maxPrice);
                   }}
                   className="text-sm text-primary hover:underline"
                 >
@@ -185,12 +240,7 @@ export default function FlightsPage() {
                     Airlines
                   </h4>
                   <div className="space-y-2">
-                    {[
-                      "American Airlines",
-                      "Delta",
-                      "United Airlines",
-                      "British Airways",
-                    ].map((airline) => (
+                    {airlines.map((airline) => (
                       <label
                         key={airline}
                         className="flex items-center cursor-pointer"
@@ -241,16 +291,19 @@ export default function FlightsPage() {
                 <span className="text-sm text-slate-500 dark:text-slate-400 mr-2">
                   Sort by:
                 </span>
-                <select className="bg-white dark:bg-card-dark border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm focus:border-primary focus:ring-primary/50 px-3 py-2">
-                  <option>Best price</option>
-                  <option>Fastest</option>
-                  <option>Departure time</option>
+                <select
+                  onChange={(e) => handleSort(e.target.value)}
+                  className="bg-white dark:bg-card-dark border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm focus:border-primary focus:ring-primary/50 px-3 py-2"
+                >
+                  <option value="bestPrice">Best price</option>
+                  <option value="fatest">Fastest</option>
+                  <option value="departureTime">Departure time</option>
                 </select>
               </div>
             </div>
 
             <div className="space-y-6">
-              {filteredFlights.map((flight) => (
+              {displayedFlights.map((flight) => (
                 <div
                   key={flight.id}
                   className="bg-white dark:bg-card-dark p-4 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-start md:items-center gap-6"
@@ -349,26 +402,34 @@ export default function FlightsPage() {
 
             {/* Pagination */}
             <div className="flex justify-center items-center space-x-2 pt-6">
-              <button className="flex items-center px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">
+              <button
+                onClick={handlePrevious}
+                className="flex items-center px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
                 <span className="material-icons-outlined text-lg mr-1">
                   arrow_back
                 </span>
                 Previous
               </button>
-              <button className="px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">
-                1
-              </button>
-              <button className="px-3 py-1 rounded-md bg-primary text-white">
-                2
-              </button>
-              <button className="px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">
-                3
-              </button>
-              <span className="text-slate-500 dark:text-slate-400">...</span>
-              <button className="px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">
-                10
-              </button>
-              <button className="flex items-center px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">
+              {tabs.map((tabs) => (
+                <button
+                  key={tabs}
+                  onClick={() => setCurrentPage(tabs)}
+                  className={`px-3 py-1 rounded-md
+                    ${
+                      currentPage === tabs
+                        ? "bg-primary text-white"
+                        : " text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700"
+                    }
+                    `}
+                >
+                  {tabs}
+                </button>
+              ))}
+              <button
+                onClick={handleNextPage}
+                className="flex items-center px-3 py-1 rounded-md text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
                 Next
                 <span className="material-icons-outlined text-lg ml-1">
                   arrow_forward
