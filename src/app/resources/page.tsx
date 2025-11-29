@@ -6,14 +6,34 @@ import { resources } from "@/lib/data";
 
 export default function ResourcesPage() {
   const [email, setEmail] = useState("");
-  const [activeTab, setActiveTab] = useState("All");
+  // const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [filteredResources, setFilteredResources] = useState(resources);
 
-  const tabs = ["All", "Planning", "Destinations", "Tips", "Inspiration"];
+  const resource = [
+    "all",
+    ...new Set(resources.map((resort) => resort.category)),
+  ];
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Subscribed:", email);
     setEmail("");
+  };
+
+  const handleFilter = (category: string) => {
+    setActiveCategory(category);
+
+    if (category === "all") {
+      setFilteredResources(resources);
+      return;
+    }
+
+    setFilteredResources(
+      resources.filter(
+        (item) => item.category.toLowerCase() === category.toLowerCase()
+      )
+    );
   };
 
   return (
@@ -54,17 +74,17 @@ export default function ResourcesPage() {
       <section className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark">
         <div className="container mx-auto px-4">
           <div className="flex gap-2 overflow-x-auto py-4">
-            {tabs.map((tab) => (
+            {resource.map((resource) => (
               <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-6 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
-                  activeTab === tab
+                key={resource}
+                onClick={() => handleFilter(resource.toLowerCase())}
+                className={`px-6 py-2 rounded-lg font-medium whitespace-nowrap transition-colors uppercase ${
+                  activeCategory === resource.toLowerCase()
                     ? "bg-primary text-white"
                     : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
                 }`}
               >
-                {tab}
+                {resource}
               </button>
             ))}
           </div>
@@ -78,10 +98,10 @@ export default function ResourcesPage() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {resources.map((resource) => (
+          {filteredResources.map((resource) => (
             <Link
               key={resource.id}
-              href={resource.link}
+              href={resource.category}
               className="group bg-white dark:bg-card-dark rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-shadow"
             >
               <div className="relative h-48">
@@ -92,9 +112,9 @@ export default function ResourcesPage() {
                 />
               </div>
 
-              <div className="p-6">
+              <div className="p-6 mt-3.5">
                 <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full mb-3">
-                  {resource.category}
+                  {resource.link}
                 </span>
 
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">

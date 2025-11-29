@@ -22,18 +22,18 @@ export default function SignInPage() {
   };
 
   return (
-    <main className="min-h-screen flex">
+    <main className="h-screen flex">
       {/* Left Side - Form */}
       <div className="flex-1 flex items-center justify-center px-4 py-12 bg-white dark:bg-background-dark">
         <div className="w-full max-w-md">
-          <div className="text-center mb-8">
+          <div className="text-center space-y-2 mb-2">
             <Link
               href="/"
-              className="text-3xl font-bold text-slate-900 dark:text-white inline-block mb-2"
+              className="text-3xl font-bold text-slate-900 dark:text-white inline-block"
             >
               go<span className="text-primary">explore</span>
             </Link>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
               Welcome Back!
             </h1>
             <p className="text-slate-600 dark:text-slate-300">
@@ -41,9 +41,9 @@ export default function SignInPage() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
                 Email Address
               </label>
               <div className="relative">
@@ -61,8 +61,8 @@ export default function SignInPage() {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
                 Password
               </label>
               <div className="relative">
@@ -117,7 +117,7 @@ export default function SignInPage() {
             </button>
           </form>
 
-          <div className="mt-6">
+          <div className="mt-3">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-slate-300 dark:border-slate-600"></div>
@@ -129,7 +129,7 @@ export default function SignInPage() {
               </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-3 gap-3">
+            <div className="mt-3 grid grid-cols-3 gap-3">
               <button
                 onClick={() => handleSocialLogin("Google")}
                 className="flex items-center justify-center px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
@@ -176,7 +176,7 @@ export default function SignInPage() {
             </div>
           </div>
 
-          <p className="mt-8 text-center text-sm text-slate-600 dark:text-slate-300">
+          <p className="mt-4 text-center text-sm text-slate-600 dark:text-slate-300">
             Don't have an account?{" "}
             <Link
               href="/signup"

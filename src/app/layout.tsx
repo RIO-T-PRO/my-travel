@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import NavBar from "@/component/navbar";
-import Footer from "@/component/footer";
+
+import AppLayout from "@/component/app-layout";
 
 export const metadata: Metadata = {
   title: "GoExplore - Your Next Adventure",
@@ -26,11 +26,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-secondary dark:bg-background-dark font-display text-slate-700 dark:text-slate-300">
-        <div className="min-h-screen flex flex-col">
-          <NavBar />
-          <main className="grow">{children}</main>
-          <Footer />
-        </div>
+        <AppLayout>{children}</AppLayout>
       </body>
     </html>
   );

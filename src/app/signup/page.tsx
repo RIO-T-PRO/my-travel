@@ -9,18 +9,13 @@ export default function SignUpPage() {
     fullName: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
+
     if (!acceptTerms) {
       alert("Please accept the terms and conditions");
       return;
@@ -39,7 +34,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <main className="min-h-screen flex">
+    <main className="h-screen flex py-10">
       {/* Left Side - Image */}
       <div className="hidden lg:block flex-1 relative">
         <Image
@@ -51,7 +46,7 @@ export default function SignUpPage() {
         <div className="absolute inset-0 bg-linear-to-t from-primary-dark/90 to-primary/50"></div>
         <div className="absolute inset-0 flex items-center justify-center text-white p-12">
           <div className="max-w-md text-center">
-            <h2 className="text-4xl font-bold mb-4">Join Our Community</h2>
+            <h2 className="text-4xl font-bold mb-2">Join Our Community</h2>
             <p className="text-lg text-white/90">
               Over 10,000 travelers have already started their journey with us.
               Be part of something special.
@@ -75,16 +70,16 @@ export default function SignUpPage() {
       </div>
 
       {/* Right Side - Form */}
-      <div className="flex-1 flex items-center justify-center px-4 py-12 bg-white dark:bg-background-dark">
+      <div className="flex-1 flex items-center justify-center px-4 bg-white dark:bg-background-dark">
         <div className="w-full max-w-md">
-          <div className="text-center mb-8">
+          <div className="text-center space-y-2">
             <Link
               href="/"
-              className="text-3xl font-bold text-slate-900 dark:text-white inline-block mb-2"
+              className="text-3xl font-bold text-slate-900 dark:text-white inline-block"
             >
               go<span className="text-primary">explore</span>
             </Link>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
               Create Your Account
             </h1>
             <p className="text-slate-600 dark:text-slate-300">
@@ -92,9 +87,9 @@ export default function SignUpPage() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
                 Full Name
               </label>
               <div className="relative">
@@ -106,7 +101,7 @@ export default function SignUpPage() {
                   value={formData.fullName}
                   onChange={(e) => handleChange("fullName", e.target.value)}
                   placeholder="Enter your full name"
-                  className="w-full pl-12 pr-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+                  className="w-full pl-12 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
                   required
                 />
               </div>
@@ -125,7 +120,7 @@ export default function SignUpPage() {
                   value={formData.email}
                   onChange={(e) => handleChange("email", e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full pl-12 pr-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+                  className="w-full pl-12 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
                   required
                 />
               </div>
@@ -144,7 +139,7 @@ export default function SignUpPage() {
                   value={formData.password}
                   onChange={(e) => handleChange("password", e.target.value)}
                   placeholder="Create a password"
-                  className="w-full pl-12 pr-12 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+                  className="w-full pl-12 pr-12 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
                   required
                 />
                 <button
@@ -160,42 +155,12 @@ export default function SignUpPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                Confirm Password
-              </label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 material-icons-outlined text-slate-400">
-                  lock
-                </span>
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={formData.confirmPassword}
-                  onChange={(e) =>
-                    handleChange("confirmPassword", e.target.value)
-                  }
-                  placeholder="Confirm your password"
-                  className="w-full pl-12 pr-12 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                >
-                  <span className="material-icons-outlined">
-                    {showConfirmPassword ? "visibility_off" : "visibility"}
-                  </span>
-                </button>
-              </div>
-            </div>
-
-            <div>
               <label className="flex items-start cursor-pointer">
                 <input
                   type="checkbox"
                   checked={acceptTerms}
                   onChange={(e) => setAcceptTerms(e.target.checked)}
-                  className="h-4 w-4 rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary/50 mt-1"
+                  className="h-4 w-4 rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary/50"
                   required
                 />
                 <span className="ml-2 text-sm text-slate-600 dark:text-slate-300">
@@ -219,7 +184,7 @@ export default function SignUpPage() {
 
             <button
               type="submit"
-              className="w-full bg-primary hover:bg-primary-dark text-white py-3 px-6 rounded-lg font-semibold transition-colors"
+              className="w-full bg-primary hover:bg-primary-dark text-white py-2 px-6 rounded-lg font-semibold transition-colors"
             >
               Create Account
             </button>
@@ -237,10 +202,10 @@ export default function SignUpPage() {
               </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-3 gap-3">
+            <div className="mt-2 grid grid-cols-3 gap-3">
               <button
                 onClick={() => handleSocialSignUp("Google")}
-                className="flex items-center justify-center px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                className="flex items-center justify-center px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path
@@ -263,7 +228,7 @@ export default function SignUpPage() {
               </button>
               <button
                 onClick={() => handleSocialSignUp("Facebook")}
-                className="flex items-center justify-center px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                className="flex items-center justify-center px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
                 <svg className="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -271,7 +236,7 @@ export default function SignUpPage() {
               </button>
               <button
                 onClick={() => handleSocialSignUp("Apple")}
-                className="flex items-center justify-center px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                className="flex items-center justify-center px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
                 <svg
                   className="w-5 h-5"
